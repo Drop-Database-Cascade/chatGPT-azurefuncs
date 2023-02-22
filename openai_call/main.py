@@ -8,8 +8,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Starting Azure functions call for ChatGPT')
 
     # Extract the question that is passed in
-    logging.debug('Extracting question from API body')
-    
     question = req.params.get('question', None)
     if not question:
         try:
@@ -21,16 +19,21 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     
     # Returns 406 error if no suitable question is supplied
     if not question:
+        logging.info(f"No valid question supplied")
         return func.HttpResponse(
             """No suitable question supplied. Please provide the input in the form; {"question": <input>}""",
             status_code=406
         )
+    # Log the question
+    logging.info(f"User question is: {question}")
     
     # Mock up the response from search. TODO: Replace with correct functionality
     search_response = search.simulate_search_response(question)
+    logging.info(f"Search response is: {search_response}")
     
     # Generate chatGPT prompt
     prompt = chatgpt.generate_chatgpt_prompt(question, search_response)
+    logging.info(f"ChatGPT prompt is: {search_response}")
     
     # Query chatGPT
     chatgpt_response = chatgpt.query_chat_gpt(prompt)
