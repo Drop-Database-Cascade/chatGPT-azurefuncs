@@ -22,8 +22,8 @@ def query_chat_gpt(prompt:str, model_engine="text-davinci-003", max_tokens=100) 
 
 def generate_chatgpt_prompt(question: str, search_response: dict) -> str:
     prompt = f"""
-        Can you please answer the following question in 50 words or less based on the input provided and any additional information available.
-        Also include the names of any documents used to generate the response. Please note that the input is in the format 
+        Answer the following question in 50 words or less based on the input provided and any additional information available.
+        Also include the names of any documents used to generate the response. Note: The input is in the format 
         {{Document Name: Input text}}. Question: {question}. Input: {search_response}
     """
     return prompt

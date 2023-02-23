@@ -33,7 +33,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     
     # Generate chatGPT prompt
     prompt = chatgpt.generate_chatgpt_prompt(question, search_response)
-    logging.info(f"ChatGPT prompt is: {search_response}")
+    logging.info(f"ChatGPT prompt is: {prompt}")
     
     # Query chatGPT
     chatgpt_response = chatgpt.query_chat_gpt(prompt)
