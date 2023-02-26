@@ -10,10 +10,18 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     question = req.params.get('question')
     if not question:
-        return func.HttpResponse(
-            "Please provide a question in the query string.",
-            status_code=400
-        )
+        try:
+            req_body = req.get_json()
+        
+        except ValueError:
+            return func.HttpResponse(
+                "Please provide a question in the query string.",
+                status_code=400
+            )
+        else:
+            question = req_body.get('question')
+
+    print(question)
 
     # Set up the API request
     api_key = 'your_openai_api_key_here'
