@@ -1,8 +1,9 @@
 import logging
 import azure.functions as func
-
+import os
 from . import search
 from . import chatgpt
+#from search import AzureSearchClient as ASC
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Starting Azure functions call for ChatGPT')
@@ -24,15 +25,31 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             """No suitable question supplied. Please provide the input in the form; {"question": <input>}""",
             status_code=406
         )
+    
     # Log the question
     logging.info(f"User question is: {question}")
     
     # Mock up the response from search. TODO: Replace with correct functionality
-    search_response = search.simulate_search_response(question)
+    #search_response = search.simulate_search_response(question)
+
+    # Initialize Azure Search Client
+    search_client = search.AzureSearchClient("https://searchisnow.search.windows.net", "document-index")
+
+    # Refine search request with Azure Search Config
+    srequest = search_client.refine_search(question)
+    logging.info(f"Refined search request paramaters are: {srequest}")
+
+    # Query Azure Search
+    search_response = search_client.get_response_cog_search(srequest)
+
     logging.info(f"Search response is: {search_response}")
-    
+
+    # Add logic to prep output for chatGPT
+    cleaned_response = search_client.prep_results_chatgpt(search_response, 5)
+    logging.info(f"Cleaned search response is: {cleaned_response}")
+
     # Generate chatGPT prompt
-    prompt = chatgpt.generate_chatgpt_prompt(question, search_response)
+    prompt = chatgpt.generate_chatgpt_prompt(question, cleaned_response)
     logging.info(f"ChatGPT prompt is: {prompt}")
     
     # Query chatGPT
@@ -44,6 +61,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         )
     
     # If everything is successful return chatGPT response
+    logging.info("Chat GPT Function call successful")
     return func.HttpResponse(
         chatgpt_response,
         status_code=200

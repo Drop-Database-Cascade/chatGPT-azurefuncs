@@ -5,8 +5,8 @@
     "azureFunctions.projectLanguage": "Python",
     "azureFunctions.projectRuntime": "~4",
     "debug.internalConsoleOptions": "neverOpen",
-    "terminal.integrated.env.osx": {
+    "terminal.integrated.env.windows": {
         "OPENAI_KEY": "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",
-        "PYTHONPATH":"${workspaceFolder}/openai/openai/"
+        "SEARCH_KEY": "C6axYptZ4lUeWJjoCSH1ATyaZqfUwyZg7i8RnQWoZIAzSeCDH05D"
     }
 }

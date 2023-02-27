@@ -2,7 +2,7 @@ import logging
 import os
 import openai
 
-def query_chat_gpt(prompt:str, model_engine="text-davinci-003", max_tokens=100) -> str:
+def query_chat_gpt(prompt:str, model_engine="text-davinci-003", max_tokens=4000) -> str:
     openai.api_key = os.getenv("OPENAI_KEY")
     
     try:
@@ -20,10 +20,10 @@ def query_chat_gpt(prompt:str, model_engine="text-davinci-003", max_tokens=100) 
         logging.info('Unsuccesful chatGPT query')
         return None
 
-def generate_chatgpt_prompt(question: str, search_response: dict) -> str:
+def generate_chatgpt_prompt(question: str, search_response: str) -> str:
     prompt = f"""
         Answer the following question in 50 words or less based on the input provided and any additional information available.
-        Also include the names of any documents used to generate the response. Note: The input is in the format 
-        {{Document Name: Input text}}. Question: {question}. Input: {search_response}
+        Apply more weight to responses with a higher relevance score. Note: The input is in the format 
+        {{relavance score: input text}}. Question: {question}. Input: {search_response}
     """
     return prompt
