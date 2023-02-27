@@ -33,7 +33,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     #search_response = search.simulate_search_response(question)
 
     # Initialize Azure Search Client
-    search_client = search.AzureSearchClient("https://searchisnow.search.windows.net", "document-index")
+    search_client = search.AzureSearchClient("searchisnow", "document-index")
 
     # Refine search request with Azure Search Config
     srequest = search_client.refine_search(question)
