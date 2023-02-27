@@ -1,10 +1,9 @@
 import logging
 import azure.functions as func
-
-
+import os
 from . import search
 from . import chatgpt
-from search import AzureSearchClient as ASC
+#from search import AzureSearchClient as ASC
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Starting Azure functions call for ChatGPT')
@@ -34,19 +33,19 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     #search_response = search.simulate_search_response(question)
 
     # Initialize Azure Search Client
-    search_client = ASC("https://searchisnow.search.windows.net", "document-index")
+    search_client = search.AzureSearchClient("https://searchisnow.search.windows.net", "document-index")
 
     # Refine search request with Azure Search Config
     srequest = search_client.refine_search(question)
-    logging.info(f"Refined search request paramters are: {srequest}")
+    logging.info(f"Refined search request paramaters are: {srequest}")
 
     # Query Azure Search
-    search_response = search_client.query_search(srequest)
+    search_response = search_client.get_response_cog_search(srequest)
 
     logging.info(f"Search response is: {search_response}")
 
-    # Add logic to trim response if it is too long
-    cleaned_response = search_client.prep_results_chatgpt(search_response, 300)
+    # Add logic to prep output for chatGPT
+    cleaned_response = search_client.prep_results_chatgpt(search_response, 5)
     logging.info(f"Cleaned search response is: {cleaned_response}")
 
     # Generate chatGPT prompt
