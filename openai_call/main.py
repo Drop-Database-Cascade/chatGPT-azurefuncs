@@ -35,18 +35,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     # Initialize Azure Search Client
     search_client = search.AzureSearchClient("searchisnow", "document-index")
 
-    # Refine search request with Azure Search Config
+    # Refine & send search request with Azure Search Config
     srequest = search_client.refine_search(question)
     logging.info(f"Refined search request paramaters are: {srequest}")
 
-    # Query Azure Search
-    search_response = search_client.get_response_cog_search(srequest)
-
-    logging.info(f"Search response is: {search_response}")
-
     # Add logic to prep output for chatGPT
-    cleaned_response = search_client.prep_results_chatgpt(search_response, 5)
-    logging.info(f"Cleaned search response is: {cleaned_response}")
+    cleaned_response = search_client.prep_results_chatgpt(srequest, 5)
+    logging.info(cleaned_response)
 
     # Generate chatGPT prompt
     prompt = chatgpt.generate_chatgpt_prompt(question, cleaned_response)
