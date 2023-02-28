@@ -2,7 +2,7 @@ import logging
 import os
 import openai
 
-def query_chat_gpt(prompt:str, model_engine="text-davinci-003", max_tokens=4000) -> str:
+def query_chat_gpt(prompt:str, model_engine="text-davinci-003", max_tokens=100) -> str:
     openai.api_key = os.getenv("OPENAI_KEY")
     
     try:
