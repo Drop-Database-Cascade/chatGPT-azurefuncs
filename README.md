@@ -25,6 +25,7 @@ To run this code, you will need:
 - Python 3.7 or later
 - Azure Functions Core Tools
 - An Azure Search Service with Semantic Search enabled and a Semantic Configuration Created
+- An OpenAI Key to access the API
 
 ## Configuration
 The following environment variables must be set:
