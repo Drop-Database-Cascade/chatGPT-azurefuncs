@@ -19,24 +19,24 @@ This code contains an Azure Function that receives an HTTP request with a user's
 
 9. Returns the ChatGPT response in an HTTP response.
 
-Requirements
+##Requirements
 To run this code, you will need:
 
-Python 3.7 or later
-Azure Functions Core Tools
-An Azure Search Service with Semantic Search enabled and a Semantic Configuration Created
+- Python 3.7 or later
+- Azure Functions Core Tools
+- An Azure Search Service with Semantic Search enabled and a Semantic Configuration Created
 
-Configuration
+##Configuration
 The following environment variables must be set:
 
-OPENAI_KEY: Key to access the ChatGPT API
-SEARCH_KEY: Key to connect to Azure Search
+- OPENAI_KEY: Key to access the ChatGPT API
+- SEARCH_KEY: Key to connect to Azure Search
 
-Deployment
+##Deployment
 To deploy this function to Azure Functions, clone this repo and set up Automatic Git integration within Azure Functions. Any merges into the main branch will be automatically deployed to the Azure Functions service.
 
 
-Usage
+##Usage
 To use this function, send an HTTP POST request with the user's question as a query parameter or in the request body.
 
 Example request:
