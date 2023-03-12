@@ -29,9 +29,8 @@ An Azure Search Service with Semantic Search enabled and a Semantic Configuratio
 Configuration
 The following environment variables must be set:
 
-SEARCH_SERVICE_NAME: the name of the Azure Search Service.
-SEARCH_INDEX_NAME: the name of the Azure Search index to search for documents.
-AZURE_FUNCTIONS_ENVIRONMENT: set to Development for local development.
+OPENAI_KEY: Key to access the ChatGPT API
+SEARCH_KEY: Key to connect to Azure Search
 
 Deployment
 To deploy this function to Azure Functions, clone this repo and set up Automatic Git integration within Azure Functions. Any merges into the main branch will be automatically deployed to the Azure Functions service.
